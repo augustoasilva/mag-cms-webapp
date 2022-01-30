@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col-12 mb-1" *ngIf="selectedStudent">
+    <div class="row">
+      <div class="col-12">
+        <app-title [title]="'Student: ' + selectedStudent.id"></app-title>
+      </div>
+    </div>
+
+    <form [formGroup]="studentForm" (submit)="submit()">
+      <div class="mb-3">
+        <label for="firstName" class="form-label">First Name</label>
+        <input type="text" formControlName="firstName" class="form-control" id="firstName">
+      </div>
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Last name</label>
+        <input type="text"formControlName="lastName" class="form-control" id="lastName">
+      </div>
+      <div class="mb-3">
+        <label for="birthDay" class="form-label">Birth day</label>
+        <input type="text"formControlName="birthDay" class="form-control" id="birthDay">
+      </div>
+      <div class="mb-3">
+        <label for="registrationNumber" class="form-label">Registration number</label>
+        <input type="text" formControlName="registrationNumber" class="form-control" id="registrationNumber">
+      </div>
+      <div class="row">
+        <div class="d-grid gap-2 col-6">
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="!studentForm.valid" *ngIf="selectedStudent.id">
+            Update
+          </button>
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="!studentForm.valid" *ngIf="!selectedStudent.id">
+            Save
+          </button>
+        </div>
+        <div class="d-grid gap-2 col-6">
+          <button class="btn btn-outline-danger btn-block" (click)="deselectStudent()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-12">
+    <app-title [title]="title"></app-title>
+    <table class="table table-hover">
+      <thead class="table-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First name</th>
+        <th scope="col">Last name</th>
+        <th scope="col">Birth day</th>
+        <th scope="col">Registration number</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let student of students">
+        <th scope="row">{{ student.id }}</th>
+        <td>{{ student.firstName }}</td>
+        <td>{{ student.lastName }}</td>
+        <td>{{ student.birthDay }}</td>
+        <td>{{ student.registrationNumber }}</td>
+        <td>
+          <div class="btn-group">
+            <button (click)="openModal(template, student)" class="btn btn-primary">
+              <i class="bi bi-info-circle"></i>
+            </button>
+            <button (click)="selectStudent(student)" class="btn btn-success">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-danger">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="d-grid gap-2 col-12">
+        <button class="btn btn-success btn-block" (click)="selectStudent(null)">Register student</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="row">
+    <div class="col-12">
+      <app-student [studentId]=selectedStudentId></app-student>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" aria-label="Close" (click)="modalRef?.hide()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

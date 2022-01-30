@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col-12 mb-1" *ngIf="selectedTeacher">
+    <div class="row">
+      <div class="col-12">
+        <app-title [title]="'Teacher: ' + selectedTeacher.id"></app-title>
+      </div>
+    </div>
+
+    <form [formGroup]="teacherForm" (submit)="submit()">
+      <div class="mb-3">
+        <label for="firstName" class="form-label">First Name</label>
+        <input type="text" formControlName="firstName" class="form-control" id="firstName">
+      </div>
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Last name</label>
+        <input type="text"formControlName="lastName" class="form-control" id="lastName">
+      </div>
+      <div class="mb-3">
+        <label for="birthDay" class="form-label">Birth day</label>
+        <input type="text"formControlName="birthDay" class="form-control" id="birthDay">
+      </div>
+      <div class="mb-3">
+        <label for="salary" class="form-label">Salary</label>
+        <input type="number" formControlName="salary" class="form-control" id="salary">
+      </div>
+      <div class="row">
+        <div class="d-grid gap-2 col-6">
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="!teacherForm.valid" *ngIf="selectedTeacher.id">
+            Update
+          </button>
+          <button type="submit" class="btn btn-primary btn-block" [disabled]="!teacherForm.valid" *ngIf="!selectedTeacher.id">
+            Save
+          </button>
+        </div>
+        <div class="d-grid gap-2 col-6">
+          <button class="btn btn-outline-danger btn-block" (click)="deselectTeacher()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-12">
+    <app-title [title]="title"></app-title>
+    <table class="table table-hover">
+      <thead class="table-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First name</th>
+        <th scope="col">Last name</th>
+        <th scope="col">Birth day</th>
+        <th scope="col">Salary</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let teacher of teachers">
+        <th scope="row">{{ teacher.id }}</th>
+        <td>{{ teacher.firstName }}</td>
+        <td>{{ teacher.lastName }}</td>
+        <td>{{ teacher.birthDay }}</td>
+        <td>{{ teacher.salary }}</td>
+        <td>
+          <div class="btn-group">
+            <button (click)="openModal(template, teacher)" class="btn btn-primary">
+              <i class="bi bi-info-circle"></i>
+            </button>
+            <button (click)="selectTeacher(teacher)" class="btn btn-success">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-danger">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="d-grid gap-2 col-12">
+        <button class="btn btn-success btn-block" (click)="selectTeacher(null)">Register teacher</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="row">
+    <div class="col-12">
+      <app-teacher [teacherId]=selectedTeacherId></app-teacher>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" aria-label="Close" (click)="modalRef?.hide()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

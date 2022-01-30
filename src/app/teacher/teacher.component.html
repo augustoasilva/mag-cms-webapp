@@ -1,0 +1,25 @@
+<div class="row mx-auto">
+  <div class="col-12">
+    <h4>Teacher: {{teacher?.firstName}} {{teacher?.lastName}}</h4>
+    <h5 class="mb-2 text-muted">Salary: €{{teacher?.salary}}</h5>
+    <p class="card-text">Birth day: {{teacher?.birthDay}}</p>
+    <div class="col-12">
+      <table class="table table-hover">
+        <thead class="table-light">
+        <tr>
+          <th scope="col">Course</th>
+          <th scope="col">Subject</th>
+          <th scope="col">Number of students</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let subject of teacher?.subjects">
+          <td>{{ subject?.course?.name }}</td>
+          <td>{{ subject?.name }}</td>
+          <td>{{ subject?.students?.length }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
